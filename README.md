@@ -80,7 +80,7 @@ to just update the index[0].
 
 Test Driven Development
 =======================
-For quality insurance I coded the whole FHR DB with test driven development. For 300 lines of code, I just create 80 testcases, which should cover all code atm. If you find a bug just make a pull request with the testcase, which reproduce the bug.
+For quality insurance I coded the whole FHR DB with test driven development. For 300 lines of code, I created 80 testcases, which should cover all code atm. If you find a bug just make a pull request with the testcase, which reproduce the bug.
 
 What to do in the future
 ========================
