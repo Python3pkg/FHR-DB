@@ -14,14 +14,14 @@ setup(
     name='FHR-DB',
 
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.0.3',
+    version='1.0.4',
 
     description='Schemaless mysql db datalayer',
     long_description=long_description,
 
     # The project's main homepage.
     url='https://github.com/nkordulla/FHR-DB',
-    download_url = 'https://github.com/nkordulla/FHR-DB/tarball/1.0.2',
+    download_url = 'https://github.com/nkordulla/FHR-DB/tarball/1.0.4',
 
     # Author details
     author='Nikolai Kordulla',
