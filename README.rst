@@ -10,7 +10,7 @@ How to use it?
 --------------
 It's a litte bit like Google Big Table. If you want to create an User Model, the table you have to create looks like this
 
-````sql
+``sql
 CREATE TABLE `users` (
   `id` INT(22) NOT NULL auto_increment,
   `body` TEXT NOT NULL,
@@ -22,12 +22,12 @@ CREATE TABLE `users` (
 
 In the body the json representation of the User is created. In your code you define the User Model like this.
 
-```python
+``python
 class User(Model):
     table = 'users'
     fields = {'nickname' : None, 'password' : None,
               'email' : { 'confirmed' : False, 'token' : None, 'email' : None, 'sent': False }}
-```
+``
 
 You can save and get the UserModel like this
 
