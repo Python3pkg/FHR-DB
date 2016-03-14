@@ -11,17 +11,17 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='FHR DB',
+    name='FHR-DB',
 
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.0.1',
+    version='1.0.2',
 
     description='Schemaless mysql db datalayer',
     long_description=long_description,
 
     # The project's main homepage.
     url='https://github.com/nkordulla/FHR-DB',
-    download_url = 'https://github.com/nkordulla/FHR-DB/tarball/1.0.1',
+    download_url = 'https://github.com/nkordulla/FHR-DB/tarball/1.0.2',
 
     # Author details
     author='Nikolai Kordulla',
