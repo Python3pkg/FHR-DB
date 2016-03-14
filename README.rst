@@ -10,7 +10,7 @@ How to use it?
 --------------
 It's a litte bit like Google Big Table. If you want to create an User Model, the table you have to create looks like this
 
-``sql
+```sql
 CREATE TABLE `users` (
   `id` INT(22) NOT NULL auto_increment,
   `body` TEXT NOT NULL,
@@ -18,16 +18,15 @@ CREATE TABLE `users` (
   `created` TIMESTAMP NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-``
+```
 
 In the body the json representation of the User is created. In your code you define the User Model like this.
-
-``python
+```python
 class User(Model):
     table = 'users'
     fields = {'nickname' : None, 'password' : None,
               'email' : { 'confirmed' : False, 'token' : None, 'email' : None, 'sent': False }}
-``
+```
 
 You can save and get the UserModel like this
 
@@ -46,7 +45,7 @@ You can set the values in the constructor, there a dict in dict is seperated thr
 user = User.fqlGet("id = %s", 10)
 if user is not None:
     print(user.get('id')) # just prints out 10 then if user was found
-``
+```
 
 If you want to query the user with nickname test you have to create an Index. The table for the index nickname look like this
 
