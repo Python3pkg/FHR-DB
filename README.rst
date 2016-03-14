@@ -20,10 +20,12 @@ It's a litte bit like Google Big Table. If you want to create an User Model, the
 
 In the body the json representation of the User is created. In your code you define the User Model like this.
 
+    ```python
     class User(Model):
         table = 'users'
-        fields = {'nickname' : None, 'password' : None.
+        fields = {'nickname' : None, 'password' : None,
                   'email' : { 'confirmed' : False, 'token' : None, 'email' : None, 'sent': False }}
+    ```
 
 You can save and get the UserModel like this
 
