@@ -10,21 +10,21 @@ How to use it?
 --------------
 It's a litte bit like Google Big Table. If you want to create an User Model, the table you have to create looks like this
 
-    CREATE TABLE `users` (
-      `id` INT(22) NOT NULL auto_increment,
-      `body` TEXT NOT NULL,
-      `updated` TIMESTAMP NOT NULL,
-      `created` TIMESTAMP NOT NULL,
-      PRIMARY KEY  (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+.. code-block:: sql
+CREATE TABLE `users` (
+  `id` INT(22) NOT NULL auto_increment,
+  `body` TEXT NOT NULL,
+  `updated` TIMESTAMP NOT NULL,
+  `created` TIMESTAMP NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 In the body the json representation of the User is created. In your code you define the User Model like this.
 
-.. code:: python
-    class User(Model):
-        table = 'users'
-        fields = {'nickname' : None, 'password' : None,
-                  'email' : { 'confirmed' : False, 'token' : None, 'email' : None, 'sent': False }}
+.. code-block:: python
+class User(Model):
+    table = 'users'
+    fields = {'nickname' : None, 'password' : None, 'email' : { 'confirmed' : False, 'token' : None, 'email' : None, 'sent': False }}
 
 You can save and get the UserModel like this
 
