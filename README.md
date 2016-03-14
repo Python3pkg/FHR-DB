@@ -1,6 +1,6 @@
 FHR DB
 ======
-Inspired from the blog post http://backchannel.org/blog/friendfeed-schemaless-mysql ,FHR DB is just programmed Layer which enables a MYSQL Database as SQL Database. I skipped some optimizations for better usage from mysql console. I plan in the future to implement this optimizations, but then a sort of PhpMyAdmin for FHR DB is needed, cause if the Datafield are zipped or if we have binary ID, mysql console is just useless.
+Inspired from the blog post http://backchannel.org/blog/friendfeed-schemaless-mysql ,FHR DB is just a programmed Layer which enables a MYSQL Database as NOSQL Database. I skipped some optimizations, which are discussed in the blog, for better usage in mysql console. I plan in the future to implement this optimizations, but then a sort of PhpMyAdmin for FHR DB is needed, cause if the Datafield are zipped or if we have binary ID, mysql console is just useless.
 
 Why FHR DB?
 -----------
