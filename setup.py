@@ -14,7 +14,7 @@ setup(
     name='FHR-DB',
 
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.0.2',
+    version='1.0.3',
 
     description='Schemaless mysql db datalayer',
     long_description=long_description,
