@@ -10,91 +10,71 @@ How to use it?
 --------------
 It's a litte bit like Google Big Table. If you want to create an User Model, the table you have to create looks like this
 
-  ```sql
-CREATE TABLE `users` (
-  `id` INT(22) NOT NULL auto_increment,
-  `body` TEXT NOT NULL,
-  `updated` TIMESTAMP NOT NULL,
-  `created` TIMESTAMP NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-  ```
+    CREATE TABLE `users` (
+      `id` INT(22) NOT NULL auto_increment,
+      `body` TEXT NOT NULL,
+      `updated` TIMESTAMP NOT NULL,
+      `created` TIMESTAMP NOT NULL,
+      PRIMARY KEY  (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 In the body the json representation of the User is created. In your code you define the User Model like this.
 
-  ```python
-class User(Model):
-    table = 'users'
-    fields = {'nickname' : None, 'password' : None,
-              'email' : { 'confirmed' : False, 'token' : None, 'email' : None, 'sent': False }}
-  ```
+    class User(Model):
+        table = 'users'
+        fields = {'nickname' : None, 'password' : None,
+                  'email' : { 'confirmed' : False, 'token' : None, 'email' : None, 'sent': False }}
 
 You can save and get the UserModel like this
 
-```python
-user = User({'nickname' : 'notstandard', 'email.email' : 'kordulla@googlemail.com')
-user.set(password='Another way to set sometgin')
-user.set(email__confirmed=True)
-user.set(email__token='Asd',sent=True)
-user.put()
-print(user.get('id')) # prints out user id for this saved user.
-```
+    user = User({'nickname' : 'notstandard', 'email.email' : 'kordulla@googlemail.com')
+    user.set(password='Another way to set sometgin')
+    user.set(email__confirmed=True)
+    user.set(email__token='Asd',sent=True)
+    user.put()
+    print(user.get('id')) # prints out user id for this saved user.
 
 You can set the values in the constructor, there a dict in dict is seperated through the `.`, in the set command it's seperated through `__`. To get the user with id=10 just use this code
 
-```python
-user = User.fqlGet("id = %s", 10)
-if user is not None:
-    print(user.get('id')) # just prints out 10 then if user was found
-```
+    user = User.fqlGet("id = %s", 10)
+    if user is not None:
+        print(user.get('id')) # just prints out 10 then if user was found
 
 If you want to query the user with nickname test you have to create an Index. The table for the index nickname look like this
 
-```sql
-CREATE TABLE `index_nickname_users` (
-  `id` INT(22) NOT NULL auto_increment,
-  `nickname` VARCHAR(64) NOT NULL,
-  `user_id` INT(22) NOT NULL UNIQUE,
-  PRIMARY KEY  (`id`),
-  KEY (`nickname`, `user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-```
+    CREATE TABLE `index_nickname_users` (
+      `id` INT(22) NOT NULL auto_increment,
+      `nickname` VARCHAR(64) NOT NULL,
+      `user_id` INT(22) NOT NULL UNIQUE,
+      PRIMARY KEY  (`id`),
+      KEY (`nickname`, `user_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 And the updated model like this.
 
-```python
-class User(Model):
-    table = 'users'
-    fields = {'nickname' : None, 'password' : None.
-              'email' : { 'confirmed' : False, 'token' : None, 'email' : None, 'sent': False }}
-    indices = [ Index(['nickname'], 'index_nickname_users', 'user_id')]
-```
+    class User(Model):
+        table = 'users'
+        fields = {'nickname' : None, 'password' : None.
+                  'email' : { 'confirmed' : False, 'token' : None, 'email' : None, 'sent': False }}
+        indices = [ Index(['nickname'], 'index_nickname_users', 'user_id')]
 
 So the code to query a single User for a nickname is then.
 
-```python
-user = User.fqlGet("nickname = %", test)
-```
+    user = User.fqlGet("nickname = %", test)
 
 For more than one expected result like in this case, cause nickname is not really unique use
 
-```python
-user = User.fqlGet("nickname = %", test)
-```
+    user = User.fqlGet("nickname = %", test)
 
 If you had already users save to the database their nickname index wouldn't be built so they wouldn't appear in the results. To built their index just use the cleaner
 
-```python
-cleaner = Cleaner()
-cleaner.cleanModel(User)
-```
+    cleaner = Cleaner()
+    cleaner.cleanModel(User)
 
 or if you have more than one index for a specific index use
 
-```python
-cleaner = Cleaner()
-cleaner.cleanModel(User. User.indices[0])
-```
+    cleaner = Cleaner()
+    cleaner.cleanModel(User. User.indices[0])
 
 to just update the index[0].
 
