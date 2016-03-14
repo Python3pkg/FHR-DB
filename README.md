@@ -79,9 +79,9 @@ or if you have more than one index for a specific index use
 to just update the index[0].
 
 Test Driven Development
-=======================
+-----------------------
 For quality insurance I coded the whole FHR DB with test driven development. For 300 lines of code, I created 80 testcases, which should cover all code atm. If you find a bug just make a pull request with the testcase, which reproduce the bug.
 
 What to do in the future
-========================
+------------------------
 If you like this concept it would be nice, if you can help to get FHR DB growing. What we needed, is that we perhaps could easily run the cleaner from command like ./clean.sh modelfile namespaceofmodel . It would be nice that index table will be automatically created from a model file, build the index etc, just with one command. For better performance binary index, and zipped json would be cool, but for that we need a data discover tool, like e.g. PhpMyAdmin for FHR DB, because the mysql console will be useless with binary id or zipped jsons.
