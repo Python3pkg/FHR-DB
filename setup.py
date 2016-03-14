@@ -21,6 +21,7 @@ setup(
 
     # The project's main homepage.
     url='https://github.com/nkordulla/FHR-DB',
+    download_url = 'https://github.com/nkordulla/FHR-DB/tarball/1.0.0',
 
     # Author details
     author='Nikolai Kordulla',
