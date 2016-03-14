@@ -1,13 +1,19 @@
 FHR DB
 ======
-Inspired from the blog post http://backchannel.org/blog/friendfeed-schemaless-mysql ,FHR DB is just programmed Layer which enables a MYSQL Database as SQL Database. I skipped some optimizations for better usage from mysql console. I plan in the future to implement this optimizations, but then a sort of PhpMyAdmin for FHR DB is needed, cause if the Datafield are zipped or if we have binary ID, mysql console is just useless.
+Inspired from the blog post http://backchannel.org/blog/friendfeed-schemaless-mysql ,FHR DB is just a programmed Layer which enables a MYSQL Database as NOSQL Database. I skipped some optimizations, which are discussed in the blog, for better usage in mysql console. I plan in the future to implement this optimizations, but then a sort of PhpMyAdmin for FHR DB is needed, cause if the Datafield are zipped or if we have binary ID, mysql console is just useless.
 
 Why FHR DB?
 -----------
 During creating an application, you need to create new database fields or delete someone. With FHR DB, you only have to change something at the DB if you want to make this fields searchable. With the FHR DB you can only query indices, that prevents you from coding a slow applications, and provides a lot of flexibility. If you have a mass of data you could easily create new indices on the fly, on a running database, with no perfomance impact. The index will be immediately up, for all new entities, for all old you just need to run the cleaner.
 
-How to use it?
+How to install
 --------------
+Install it via pip
+
+    pip install fhr-db
+
+How to use it
+-------------
 It's a litte bit like Google Big Table. If you want to create an User Model, the table you have to create looks like this
 
     CREATE TABLE `users` (
@@ -79,9 +85,9 @@ or if you have more than one index for a specific index use
 to just update the index[0].
 
 Test Driven Development
-=======================
+-----------------------
 For quality insurance I coded the whole FHR DB with test driven development. For 300 lines of code, I created 80 testcases, which should cover all code atm. If you find a bug just make a pull request with the testcase, which reproduce the bug.
 
 What to do in the future
-========================
+------------------------
 If you like this concept it would be nice, if you can help to get FHR DB growing. What we needed, is that we perhaps could easily run the cleaner from command like ./clean.sh modelfile namespaceofmodel . It would be nice that index table will be automatically created from a model file, build the index etc, just with one command. For better performance binary index, and zipped json would be cool, but for that we need a data discover tool, like e.g. PhpMyAdmin for FHR DB, because the mysql console will be useless with binary id or zipped jsons.
