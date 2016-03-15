@@ -1,2 +1,2 @@
 #!/bin/sh
-python -m tests.fhr_test.py
+python -m tests.fhr_test

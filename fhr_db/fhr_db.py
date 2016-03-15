@@ -235,13 +235,13 @@ class Model():
                 index.put(self)
 
     def delete(self):
+        for index in self.indices:
+            index.delete(self)
         sql = "DELETE FROM %(table)s WHERE id = %(args)s" % {'table' : self.table, 'args' : '%s'}
         Database.get().execute(sql, self._id)
         self._id = None
         self._created = None
         self._updated = None
-        for index in self.indices:
-            index.delete(self)
 
     @classmethod
     def _loadFromId(cls, id):

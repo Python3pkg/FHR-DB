@@ -5,8 +5,8 @@ import os
 from tornado.options import define, options
 from base import BaseDbTest
 
-from fhr_db import Database
-from fhr_db import Index, Model, Fql, Cleaner
+from fhr_db.fhr_db import Database
+from fhr_db.fhr_db import Index, Model, Fql, Cleaner
 
 define("mysql_host", default="127.0.0.1:3306", help="database host")
 define("mysql_database", default="paidanswerstest", help="database name")
@@ -267,6 +267,16 @@ class TestModel(BaseDbTest):
         self.assertEquals(model._id, None)
         result = ComplexInnerModel.fqlAll("id = %s", model._id)
         self.assertEquals(len(result), 0)
+
+    def test_delete_with_index(self):
+        model = ComplexInnerModel({'email' : {'token' : 'test'}})
+        model.put()
+        result = ComplexInnerModel.fqlAll("email.token = %s", "test")
+        self.assertEquals(len(result), 1)
+        model.delete()
+        result = ComplexInnerModel.fqlAll("email.token = %s", "test")
+        self.assertEquals(len(result), 0)
+
 
     def test_inner_model_should_not_be_none(self):
         with self.assertRaises(Exception) as cmd:
@@ -624,5 +634,5 @@ def main():
     suite = unittest.TestLoader().loadTestsFromTestCase(TestCleaner)
     unittest.TextTestRunner(verbosity=1).run(suite)
 
-if __name__ == "tests.fhr_test":
+if __name__ == "__main__":
     main()
