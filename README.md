@@ -66,11 +66,11 @@ And the updated model like this.
 
 So the code to query a single User for a nickname is then.
 
-    user = User.fqlGet("nickname = %", test)
+    user = User.fqlGet("nickname = %s", test)
 
 For more than one expected result like in this case, cause nickname is not really unique use
 
-    user = User.fqlAll("nickname = %", test)
+    user = User.fqlAll("nickname = %s", test)
 
 If you had already users save to the database their nickname index wouldn't be built so they wouldn't appear in the results. To built their index just use the cleaner
 
