@@ -4,7 +4,7 @@ Inspired from the blog post http://backchannel.org/blog/friendfeed-schemaless-my
 
 Why FHR DB?
 -----------
-During creating an application, you need to create new database fields or delete someone. With FHR DB, you only have to change something at the DB if you want to make this fields searchable. With the FHR DB you can only query indices, that prevents you from coding a slow applications, and provides a lot of flexibility. If you have a mass of data you could easily create new indices on the fly, on a running database, with no perfomance impact. The index will be immediately up, for all new entities, for all old you just need to run the cleaner.
+During creating an application, you need to create new database fields or delete someone. With FHR DB, you only have to modify the structure of the DB, to enable this field for query. With FHR DB you can only query indices, that prevents you from coding slow applications, and provides a lot of flexibility. If you have a mass of data you could easily create new indices on the fly, on a running database, with no perfomance impact. The index will be immediately up, for all new entities, for all old you just need to run the cleaner.
 
 How to install
 --------------
