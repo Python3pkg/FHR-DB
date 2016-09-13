@@ -125,7 +125,7 @@ class Fql():
         intersect = set(self.paramList).intersection(index.indexOrIndices)
         if len(self.paramList) == 0:
             return 0
-        return len(intersect) / len(self.paramList)
+        return float(len(intersect)) / float(len(self.paramList))
 
     def determineIndex(self, indices):
         maxValue = 0
