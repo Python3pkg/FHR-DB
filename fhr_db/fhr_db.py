@@ -124,14 +124,16 @@ class Fql():
     def _determineIndexValue(self, index):
         intersect = set(self.paramList).intersection(index.indexOrIndices)
         if len(self.paramList) == 0:
-            return 0
-        return float(len(intersect)) / float(len(self.paramList))
+            return 0.0
+        return float(len(intersect)) / float(len(index.indexOrIndices))
 
     def determineIndex(self, indices):
-        maxValue = 0
+        maxValue = 0.0
         selectIndex = None
         for index in indices:
-            if self._determineIndexValue(index) > maxValue:
+            indexValue = self._determineIndexValue(index)
+            if indexValue > maxValue:
+                maxValue = indexValue
                 selectIndex = index
         return selectIndex
 
