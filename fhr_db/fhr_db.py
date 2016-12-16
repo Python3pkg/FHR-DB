@@ -269,12 +269,14 @@ class Model():
             query = " WHERE %(query)s" % {'query' : query }
         elif query is None:
             query = ''
-        sql = "SELECT id, body FROM %(table)s %(query)s" % { 'table' : cls.table, 'query' : query }
+        sql = "SELECT id, body, created, updated FROM %(table)s %(query)s" % { 'table' : cls.table, 'query' : query }
         result = Database.get().query(sql, *args)
         objects = []
         for row in result:
             model = cls(json.loads(row['body']))
             model._id = row['id']
+            model._updated = result['updated']
+            model._created = result['created']
             objects.append(model)
         return objects
 
