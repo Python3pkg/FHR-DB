@@ -275,8 +275,8 @@ class Model():
         for row in result:
             model = cls(json.loads(row['body']))
             model._id = row['id']
-            model._updated = result['updated']
-            model._created = result['created']
+            model._updated = row['updated']
+            model._created = row['created']
             objects.append(model)
         return objects
 
