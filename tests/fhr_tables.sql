@@ -65,3 +65,19 @@ CREATE TABLE `simple_new_new2_new3_index` (
   PRIMARY KEY  (`id`),
   KEY (`new`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `simple_updated_index` (
+  `id` INT(22) NOT NULL auto_increment,
+  `updated` DATETIME NOT NULL,
+  `simple_id` INT(22) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY (`updated`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `simple_created_index` (
+  `id` INT(22) NOT NULL auto_increment,
+  `created` DATETIME NOT NULL,
+  `simple_id` INT(22) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY (`created`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

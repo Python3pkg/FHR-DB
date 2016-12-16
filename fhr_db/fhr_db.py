@@ -41,7 +41,12 @@ class Index():
 
     def _determineValueAndFieldName(self, field, model):
         innerFields = field.split(".")
-        value = model.data[innerFields[0]]
+        if len(innerFields) == 1 and innerFields[0] == "created":
+            value = model._created
+        elif len(innerFields) == 1 and innerFields[0] == "updated":    
+            value = model._updated
+        else:
+            value = model.data[innerFields[0]]
         innerFields.pop(0)
         for innerField in innerFields:
             value = value[innerField]
@@ -124,7 +129,7 @@ class Fql():
     def _determineIndexValue(self, index):
         intersect = set(self.paramList).intersection(index.indexOrIndices)
         if len(self.paramList) == 0:
-            return 0.0
+            return 0.0            
         return float(len(intersect)) / float(len(index.indexOrIndices))
 
     def determineIndex(self, indices):
@@ -132,7 +137,7 @@ class Fql():
         selectIndex = None
         for index in indices:
             indexValue = self._determineIndexValue(index)
-            if indexValue > maxValue:
+            if indexValue > maxValue or (indexValue > 0 and indexValue == maxValue and len(index.indexOrIndices) > len(selectIndex.indexOrIndices)):
                 maxValue = indexValue
                 selectIndex = index
         return selectIndex

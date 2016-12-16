@@ -3,7 +3,7 @@ import json
 import os
 
 from tornado.options import define, options
-from base import BaseDbTest
+from tests.base import BaseDbTest
 
 from fhr_db.fhr_db import Database
 from fhr_db.fhr_db import Index, Model, Fql, Cleaner
@@ -75,6 +75,16 @@ class SimpldeMOdel(Model):
 
     fields = {}
 
+class SimpleModelWithUpdated(Model):
+    fields = {'new' : 'new', 'email' : {'token' : { 'field': 'test'}}}
+    table = 'complex_inner_model'
+    indices = [Index(["updated"], "simple_updated_index", "simple_id")]
+
+class SimpleModelWithCreated(Model):
+    fields = {'new' : 'new', 'email' : {'token' : { 'field': 'test'}}}
+    table = 'complex_inner_model'
+    indices = [Index(["created"], "simple_created_index", "simple_id")]
+
 class ComplexModel(Model):
 
     fields = {'field' : 'field', 'field2' : 'field2'}
@@ -113,8 +123,8 @@ class ComplexModelWith2List1Normal(Model):
     table = 'complex_inner_model'
     indices = [Index(["new", "new3", "new2"], "simple_new_new2_new3_index", "simple_id")]
 
-class TestModel(BaseDbTest):
 
+class TestModel(BaseDbTest):
     def test_init(self):
         model = ComplexModel()
         self.assertEquals(model._id, None)
@@ -523,6 +533,22 @@ class TestModel(BaseDbTest):
         result = Database.get().query(sql, model.get('id'))
         expectedResult = [{'new' : '1', 'new2' : '3', 'new3' : 'normal'}]
         self.assertEquals(result, expectedResult)
+
+    def test_index_with_updated_in_it(self):
+        model = SimpleModelWithUpdated()
+        model.set(new=[1])
+        model.put()
+        sql = "SELECT updated FROM simple_updated_index WHERE simple_id = %s"
+        result = Database.get().query(sql, model.get('id'))
+        self.assertEquals(model._updated, result[0]['updated'])
+
+    def test_index_with_created_in_it(self):
+        model = SimpleModelWithCreated()
+        model.set(new=[1])
+        model.put()
+        sql = "SELECT created FROM simple_created_index WHERE simple_id = %s"
+        result = Database.get().query(sql, model.get('id'))
+        self.assertEquals(model._updated, result[0]['created'])
 
 class TestFql(unittest.TestCase):
 

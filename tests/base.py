@@ -4,6 +4,7 @@ import uuid
 
 from tornado.options import options
 
+
 class DatabaseTestHelper:
 
     con = None
