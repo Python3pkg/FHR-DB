@@ -619,7 +619,7 @@ class TestCleaner(BaseDbTest):
         time.sleep(2)
         cleaner.cleanModel(ComplexInnerModel)
         newModel = ComplexInnerModel.fqlGet('id = %s', model.get('id'))
-        self.assertNotEquals(model.get('updated'), newModel.get('updated'))
+        self.assertEquals(model.get('updated'), newModel.get('updated'))
 
     def test_cleaner_update_both_index(self):
         model = ComplexInnerModel()
@@ -636,11 +636,13 @@ class TestCleaner(BaseDbTest):
     def test_cleaner_update_one_index(self):
         model = ComplexInnerModel()
         model.put()
+        updated = model.get('updated')
         sql = "DELETE FROM simple_token_index"
         Database.get().execute(sql)
         sql = "DELETE FROM simple_new_index"
         Database.get().execute(sql)
         cleaner = Cleaner()
+        time.sleep(2)
         cleaner.cleanModel(ComplexInnerModel, [ComplexInnerModel.indices[0]])
         self.assertEquals(1, len(Database.get().query('SELECT id FROM simple_token_index')))
         self.assertEquals(0, len(Database.get().query('SELECT id FROM simple_new_index')))

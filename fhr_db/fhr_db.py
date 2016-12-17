@@ -221,14 +221,18 @@ class Model():
             base[val] = kwargs[field]
         self.data = self._loadDataInner({}, copy.deepcopy(self.data), _data)
 
-    def put(self, indices = None):
+    def put(self, indices = None, updateUpdated=True):
         data = copy.deepcopy(self.data)
         if self._id is None:
             sql = "INSERT INTO %(table)s (id,body,created,updated) VALUES(%(args)s)" % {'table' : self.table, 'args' : '%s,%s,NOW(),NOW()'}
             self._id = Database.get().execute(sql, None, json.dumps(data))
         else:
-            sql = "UPDATE %(table)s SET body = %(arg)s, updated = NOW() WHERE id = %(arg)s" % {'table' : self.table, 'arg' : '%s'}
-            Database.get().execute(sql, json.dumps(data), self._id )
+            if updateUpdated is False:
+                sql = "UPDATE %(table)s SET body = %(arg)s WHERE id = %(arg)s" % {'table' : self.table, 'arg' : '%s'}
+                Database.get().execute(sql, json.dumps(data), self._id )
+            else:    
+                sql = "UPDATE %(table)s SET body = %(arg)s, updated = NOW() WHERE id = %(arg)s" % {'table' : self.table, 'arg' : '%s'}
+                Database.get().execute(sql, json.dumps(data), self._id )
         # load updated created
         sql = "SELECT created, updated FROM %(table)s WHERE id = %(arg)s " % {'table' : self.table, 'arg' : '%s'}
         result = Database.get().get(sql, self._id)
@@ -336,5 +340,5 @@ class Cleaner():
         self._setTimeEpoch(dttm)
         result = model.fqlAll('updated <= %s', self.timeEpochString)
         for row in result:
-            row.put(indices)
+            row.put(indices, False)
 
