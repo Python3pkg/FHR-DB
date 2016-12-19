@@ -11,10 +11,21 @@ class Database:
     db = None
 
     @staticmethod
+    def determineTimezone():
+        is_dst = time.daylight and time.localtime().tm_isdst 
+        utc_offset = - (time.altzone if is_dst else time.timezone)
+        m,s = divmod(utc_offset, 60)
+        h,m = divmod(m, 60)
+        if utc_offset > 0:
+            return "+%d:%02d" % (h,m)
+        else:    
+            return "-%d:%02d" % (h,m)
+
+    @staticmethod
     def get():
         if Database.db is None:
             Database.db = torndb.Connection(host=options.mysql_host ,  database=options.mysql_database,
-                                            user=options.mysql_user, password=options.mysql_password, connect_timeout=5)
+                                            user=options.mysql_user, password=options.mysql_password, connect_timeout=5, time_zone=Database.determineTimezone())
         return Database.db
 
     @staticmethod

@@ -548,7 +548,7 @@ class TestModel(BaseDbTest):
         model.put()
         sql = "SELECT created FROM simple_created_index WHERE simple_id = %s"
         result = Database.get().query(sql, model.get('id'))
-        self.assertEquals(model._updated, result[0]['created'])
+        self.assertEquals(model._created, result[0]['created'])
 
 class TestFql(unittest.TestCase):
 
@@ -608,6 +608,7 @@ class TestFql(unittest.TestCase):
         self.assertEquals(index, index_3)
 
 
+
 import time
 
 class TestCleaner(BaseDbTest):
@@ -615,11 +616,12 @@ class TestCleaner(BaseDbTest):
     def test_cleaner_update_all(self):
         model = ComplexInnerModel()
         model.put()
-        time.sleep(2)
+        saved = model.get('updated')
+        time.sleep(4)
         cleaner = Cleaner()
         cleaner.cleanModel(ComplexInnerModel)
         newModel = ComplexInnerModel.fqlGet('id = %s', model.get('id'))
-        self.assertEquals(model.get('updated'), newModel.get('updated'))
+        self.assertEquals(saved, newModel.get('updated'))
 
     def test_cleaner_update_both_index(self):
         model = ComplexInnerModel()
