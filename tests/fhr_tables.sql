@@ -26,7 +26,7 @@ CREATE TABLE `simple_inner_index` (
 CREATE TABLE `complex_inner_model` (
   `id` INT(22) NOT NULL auto_increment,
   `body` TEXT NOT NULL,
-  `updated` TIMESTAMP NOT NULL,
+  `updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` TIMESTAMP NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

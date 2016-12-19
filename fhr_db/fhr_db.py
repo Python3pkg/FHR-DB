@@ -239,8 +239,8 @@ class Model():
             self._id = Database.get().execute(sql, None, json.dumps(data))
         else:
             if updateUpdated is False:
-                sql = "UPDATE %(table)s SET body = %(arg)s WHERE id = %(arg)s" % {'table' : self.table, 'arg' : '%s'}
-                Database.get().execute(sql, json.dumps(data), self._id )
+                sql = "UPDATE %(table)s SET body = %(arg)s, updated = %(updated)s WHERE id = %(arg)s" % {'table' : self.table, 'updated': '%s', 'arg' : '%s'}
+                Database.get().execute(sql, json.dumps(data), self._updated, self._id )
             else:    
                 sql = "UPDATE %(table)s SET body = %(arg)s, updated = NOW() WHERE id = %(arg)s" % {'table' : self.table, 'arg' : '%s'}
                 Database.get().execute(sql, json.dumps(data), self._id )
