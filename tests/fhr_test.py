@@ -615,8 +615,8 @@ class TestCleaner(BaseDbTest):
     def test_cleaner_update_all(self):
         model = ComplexInnerModel()
         model.put()
-        cleaner = Cleaner()
         time.sleep(2)
+        cleaner = Cleaner()
         cleaner.cleanModel(ComplexInnerModel)
         newModel = ComplexInnerModel.fqlGet('id = %s', model.get('id'))
         self.assertEquals(model.get('updated'), newModel.get('updated'))
